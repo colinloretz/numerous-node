@@ -1,0 +1,14 @@
+{
+  "name": "numerous-node",
+  "version": "0.0.1",
+  "dependencies": {
+    "request": "*"
+  },
+  "description": "Numerous Node Library",
+  "main": "numerous.js",
+  "keywords": [
+    "Numerous", "node", "nodejs"
+  ],
+  "author": "colinloretz <https://github.com/colinloretz>",
+  "license": "MIT"
+}
