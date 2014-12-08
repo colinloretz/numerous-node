@@ -1,8 +1,14 @@
 var request = require('request');
 
 function Numerous(api_key) {
-    this.url = 'https://api.numerousapp.com/';
+    this.url = 'https://api.numerousapp.com/v1';
     this.api_key = api_key;
+}
+
+function Numerous(api_key, channelId) {
+    this.url = 'https://api.numerousapp.com/v1';
+    this.api_key = api_key;
+	this.channelId = channelId;
 }
 
 Numerous.prototype.makeRequest = function(verb, url, body, callback) {
@@ -94,6 +100,11 @@ Numerous.prototype.updateMetric = function(metric, callback) {
 	self.makeRequest("PUT", self.url + '/metrics/' + metricId, metric, callback);
 }
 
+Numerous.prototype.deleteMetric = function(metricId, callback) {
+	var self = this;
+	self.makeRequest("DELETE", self.url + '/metrics/' + metricId, undefined, callback);
+}
+
 Numerous.prototype.getMySubscriptions = function(callback) {
     var self = this;
 	self.makeRequest("GET", self.url + '/users/me/subscriptions', '', callback);
@@ -122,9 +133,9 @@ Numerous.prototype.createError = function(metricId, commentBody, callback) {
 /* Developer Channel Management Endpoints */
 /* ************************************** */
 
-Numerous.prototype.getChannels = function(channelId, callback) {
-	var self = this;
-	self.makeRequest("GET", + '/channels/' + channelId + '/metrics', callback);
+Numerous.prototype.getChannels = function(callback) {
+    var self = this;
+	self.makeRequest("GET", self.url + '/channels', undefined, callback);
 }
 
 Numerous.prototype.createChannel = function(channel, callback) {
@@ -134,7 +145,7 @@ Numerous.prototype.createChannel = function(channel, callback) {
 
 Numerous.prototype.getChannel = function(channelId, callback) {
 	var self = this;
-	self.makeRequest("GET", self.url + '/channels/' + channelId, callback);
+	self.makeRequest("GET", self.url + '/channels/' + channelId, undefined, callback);
 }
 
 Numerous.prototype.updateChannel = function(channel, callback) {
@@ -144,16 +155,9 @@ Numerous.prototype.updateChannel = function(channel, callback) {
 	self.makeRequest("PUT", self.url + '/channels/' + channelId, channel, callback);
 }
 
-Numerous.prototype.updateChannel = function(channel, callback) {
+Numerous.prototype.getChannelMetrics = function(callback) {
 	var self = this;
-	var channelData = JSON.parse(channel);
-	var channelId = channel.id
-	self.makeRequest("PUT", self.url + '/channels/' + channelId, channel, callback);
-}
-
-Numerous.prototype.getChannelMetrics = function(channelId, callback) {
-	var self = this;
-	self.makeRequest("GET", self.url + '/channels/' + channelId + '/metrics', callback);
+	self.makeRequest("GET", self.url + '/channels/' + self.channelId + '/metrics', undefined, callback);
 }
 
 Numerous.prototype.createChannelMetric = function(metric, token, callback) {
