@@ -6,7 +6,7 @@ numerous-node is in the NPM repository. You can install it by running the comman
 npm install numerous-node
 ```  
 
-To get started, you have two options. Which option you should use depends on what you'd like to accomplish with Numerous.
+To get started, you have two options depending on what you hope to accomplish:
 
 ## Option 1: Manage your own metrics
 As a Numerous user, you can use your Numerous API key to programmatically create, update and manage your personal metrics.
