@@ -78,6 +78,35 @@ Numerous.prototype.makeChannelRequest = function(verb, url, body, token, callbac
     });
 }
 
+Numerous.prototype.makeFormRequest = function(verb, url, formData, callback) {
+	var self = this;
+	
+    var options = {
+        uri: url,
+        method: verb,
+        headers: {
+            'Authorization': 'Basic ' + new Buffer(self.api_key + ':').toString('base64'),
+        },
+		formData: formData
+    }
+	
+	request(options, function (err, res, body) {
+        if (err) {
+			console.log('Request error is ', err);
+            return callback(err);
+        } else if (res.statusCode !== 200 && res.statusCode !== 201) {
+			console.log('Request error is ', res.statusCode);
+            return callback(new Error(res.statusCode));
+        } else {
+            if (body) {
+                return callback(body);
+            } else {
+                return callback(null, body);
+            }
+        }
+	});
+}
+
 Numerous.prototype.getMyMetrics = function(callback) {
     var self = this;
 	self.makeRequest("GET", self.url + '/users/me/metrics', undefined, callback);
@@ -98,6 +127,12 @@ Numerous.prototype.updateMetric = function(metric, callback) {
 	var metricData = JSON.parse(metric);
 	var metricId = metricData.id
 	self.makeRequest("PUT", self.url + '/metrics/' + metricId, metric, callback);
+}
+
+Numerous.prototype.addMetricPhotoByUrl = function(metricId, photoURL, callback) {
+	var self = this;
+	var formData = { image : request(photoURL) };
+	self.makeFormRequest("POST", self.url + '/metrics/' + metricId + '/photo', formData, callback); 
 }
 
 Numerous.prototype.deleteMetric = function(metricId, callback) {
