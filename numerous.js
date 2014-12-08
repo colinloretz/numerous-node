@@ -35,7 +35,7 @@ Numerous.prototype.makeRequest = function(verb, url, body, callback) {
             return callback(new Error(res.statusCode));
         } else {
             if (body) {
-                return callback(JSON.parse(body));
+                return callback(null, JSON.parse(body));
             } else {
                 return callback(null, body);
             }
@@ -70,7 +70,7 @@ Numerous.prototype.makeChannelRequest = function(verb, url, body, token, callbac
             return callback(new Error(res.statusCode));
         } else {
             if (body) {
-                return callback(JSON.parse(body));
+                return callback(null, JSON.parse(body));
             } else {
                 return callback(null, body);
             }
@@ -99,7 +99,7 @@ Numerous.prototype.makeFormRequest = function(verb, url, formData, callback) {
             return callback(new Error(res.statusCode));
         } else {
             if (body) {
-                return callback(JSON.parse(body));
+                return callback(null, JSON.parse(body));
             } else {
                 return callback(null, body);
             }
