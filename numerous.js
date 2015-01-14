@@ -190,7 +190,7 @@ Numerous.prototype.updateChannel = function(channel, callback) {
 	self.makeRequest("PUT", self.url + '/channels/' + channelId, channel, callback);
 }
 
-Numerous.prototype.getChannelMetrics = function(sourceClass, callback) {
+Numerous.prototype.getChannelMetricsWithSourceClass = function(sourceClass, callback) {
 	var self = this;
 	self.makeRequest("GET", self.url + '/channels/' + self.channelId + '/metrics?sourceClass=' + sourceClass, undefined, callback);
 }
