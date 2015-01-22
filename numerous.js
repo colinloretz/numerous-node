@@ -175,7 +175,7 @@ Numerous.prototype.getChannels = function(callback) {
 
 Numerous.prototype.getMyChannels = function(callback) {
     var self = this;
-	self.makeRequest("GET", 'https://api.numerousapp.com/v1/users/me/channels', undefined, callback);
+	self.makeRequest("GET", 'https://api.numerousapp.com/v1/users/me/channels?status=all', undefined, callback);
 }
 
 
