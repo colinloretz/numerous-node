@@ -173,6 +173,12 @@ Numerous.prototype.getChannels = function(callback) {
 	self.makeRequest("GET", 'https://api.numerousapp.com/v2/channels?status=dev', undefined, callback);
 }
 
+Numerous.prototype.getMyChannels = function(callback) {
+    var self = this;
+	self.makeRequest("GET", 'https://api.numerousapp.com/v1/users/me/channels', undefined, callback);
+}
+
+
 Numerous.prototype.createChannel = function(channel, callback) {
 	var self = this;
 	self.makeRequest("POST", self.url + '/channels', channel, callback);
