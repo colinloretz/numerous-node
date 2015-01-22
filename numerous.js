@@ -170,7 +170,7 @@ Numerous.prototype.createError = function(metricId, commentBody, callback) {
 
 Numerous.prototype.getChannels = function(callback) {
     var self = this;
-	self.makeRequest("GET", 'https://api.numerousapp.com/v2/channels?status=all', undefined, callback);
+	self.makeRequest("GET", 'https://api.numerousapp.com/v2/channels?status=dev', undefined, callback);
 }
 
 Numerous.prototype.createChannel = function(channel, callback) {
