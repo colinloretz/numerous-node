@@ -155,6 +155,11 @@ Numerous.prototype.createEvent = function(metricId, valueJSON, callback) {
 	self.makeRequest("POST", self.url + '/metrics/' + metricId + '/events', valueJSON, callback)
 }
 
+Numerous.prototype.deleteEvent = function(metricId, eventId, callback) {
+	var self = this;
+	self.makeRequest("DELETE", self.url + '/metrics/' + metricId + '/events/' + eventId , undefined, callback)
+}
+
 Numerous.prototype.createComment = function(metricId, commentBody, callback) {
 	var self = this;
 	var event = { kind: "comment", commentBody: commentBody };
