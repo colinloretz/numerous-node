@@ -145,6 +145,11 @@ Numerous.prototype.getMySubscriptions = function(callback) {
 	self.makeRequest("GET", self.url + '/users/me/subscriptions', '', callback);
 }
 
+Numerous.prototype.getEventsForMetric = function(metricId, callback) {
+    var self = this;
+	self.makeRequest("GET", self.url + '/metrics/' + metricId + '/events', '', callback);
+}
+
 Numerous.prototype.createEvent = function(metricId, valueJSON, callback) {
 	var self = this;
 	self.makeRequest("POST", self.url + '/metrics/' + metricId + '/events', valueJSON, callback)
