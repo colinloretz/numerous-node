@@ -1,4 +1,5 @@
 var request = require('request');
+var async = require('async');
 
 function Numerous(api_key) {
     this.url = 'https://api.numerousapp.com/v1';
@@ -214,6 +215,33 @@ Numerous.prototype.getChannelMetricsWithSourceClass = function(sourceClass, call
 Numerous.prototype.getChannelMetrics = function(callback) {
 	var self = this;
 	self.makeRequest("GET", self.url + '/channels/' + self.channelId + '/metrics', undefined, callback);
+}
+
+Numerous.prototype.getChannelMetricsPaged = function(_cb) {
+    var self = this;	
+	var metrics = [];
+	var allMetrics = [];
+	var channelMetricURL = 'https://api.numerousapp.com/v2/channels/' + self.channelId + '/metrics';
+	
+    async.doWhilst(function(callback) {
+		self.makeRequest("GET", channelMetricURL, undefined, function(err, res) {
+			if(err) {
+				callback(err, res);
+			} else {
+				metrics = res.metrics;
+				metrics.forEach(function(item) {
+					allMetrics.push(item);	
+				});
+				channelMetricURL = res.nextURL;
+				callback();
+			}	
+		});
+    }, function() {
+		return channelMetricURL;
+    }, function(err) {
+		_cb(err, allMetrics);
+    });
+	
 }
 
 Numerous.prototype.createChannelMetric = function(metric, token, callback) {
