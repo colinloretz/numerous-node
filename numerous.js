@@ -66,7 +66,7 @@ Numerous.prototype.makeChannelRequest = function(verb, url, body, token, callbac
         if (err) {
 			console.log('Request error is ', err);
             return callback(err);
-        } else if (res.statusCode !== 200 && res.statusCode !== 201) {
+        } else if (res.statusCode !== 200 && res.statusCode !== 201 && res.statusCode !== 409) {
 			console.log('Request error is ', res.statusCode);
             return callback(new Error(res.statusCode));
         } else {
