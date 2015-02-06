@@ -254,4 +254,22 @@ Numerous.prototype.createChannelMetricV2 = function(metric, sourceClass, sourceK
 	self.makeChannelRequest("POST", "https://api.numerousapp.com/v2/channels/" + self.channelId + "/metrics/" + sourceClass + "/" + sourceKey, metric, token, callback);
 }
 
+/* Credentials */
+
+Numerous.prototype.storeCreds = function(userId, serviceId, payload, callback){
+	var self = this;
+	self.makeRequest("PUT", "https://api.numerousapp.com/v2/users/" + userId + "/creds/" + serviceId, payload, callback); 
+}
+
+Numerous.prototype.getCreds = function(userId, serviceId, callback){
+	var self = this;
+	self.makeRequest("GET", "https://api.numerousapp.com/v2/users/" + userId + "/creds/" + serviceId, undefined, callback); 
+}
+
+Numerous.prototype.deleteCreds = function(userId, serviceId, callback){
+	var self = this;
+	self.makeRequest("DELETE", "https://api.numerousapp.com/v2/users/" + userId + "/creds/" + serviceId, undefined, callback); 
+}
+
+
 module.exports = Numerous;
