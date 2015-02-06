@@ -249,4 +249,9 @@ Numerous.prototype.createChannelMetric = function(metric, token, callback) {
 	self.makeChannelRequest("POST", self.url + '/metrics', metric, token, callback);
 }
 
+Numerous.prototype.createChannelMetricV2 = function(metric, sourceClass, sourceKey, token, callback) {
+	var self = this;
+	self.makeChannelRequest("POST", "https://api.numerousapp.com/v2/channels/" + self.channelId + "/metrics/" + sourceClass + "/" + sourceKey, metric, token, callback);
+}
+
 module.exports = Numerous;
