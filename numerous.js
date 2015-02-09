@@ -254,6 +254,11 @@ Numerous.prototype.createChannelMetricV2 = function(metric, sourceClass, sourceK
 	self.makeChannelRequest("POST", "https://api.numerousapp.com/v2/channels/" + self.channelId + "/metrics/" + sourceClass + "/" + sourceKey, metric, token, callback);
 }
 
+Numerous.prototype.findOrCreateMetric = function(metric, sourceClass, sourceKey, token, callback) {
+	var self = this;
+	self.makeChannelRequest("POST", "https://api.numerousapp.com/v2/channels/" + self.channelId + "/metrics/" + sourceClass + "/" + sourceKey, metric, token, callback);
+}
+
 /* Credentials */
 
 Numerous.prototype.storeCreds = function(userId, serviceId, payload, callback){
