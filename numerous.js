@@ -130,6 +130,13 @@ Numerous.prototype.updateMetric = function(metric, callback) {
 	self.makeRequest("PUT", self.url + '/metrics/' + metricId, metric, callback);
 }
 
+Numerous.prototype.updateMetricV2 = function(metric, callback) {
+	var self = this;
+	var metricData = JSON.parse(metric);
+	var metricId = metricData.id
+	self.makeRequest("PUT", "https://api.numerousapp.com/v2/metrics/" + metricId, metric, callback);
+}
+
 Numerous.prototype.addMetricPhotoByUrl = function(metricId, photoURL, callback) {
 	var self = this;
 	var formData = { image : request(photoURL) };
