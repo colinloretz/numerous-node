@@ -219,6 +219,11 @@ Numerous.prototype.getChannelMetricsWithSourceClass = function(sourceClass, call
 	self.makeRequest("GET", self.url + '/channels/' + self.channelId + '/metrics?sourceClass=' + sourceClass, undefined, callback);
 }
 
+Numerous.prototype.getChannelMetricsWithSourceClassV2 = function(sourceClass, callback) {
+	var self = this;
+	self.makeRequest("GET", 'https://api.numerousapp.com/v2/channels/' + self.channelId + '/metrics/' + sourceClass, undefined, callback);
+}
+
 Numerous.prototype.getChannelMetrics = function(callback) {
 	var self = this;
 	self.makeRequest("GET", self.url + '/channels/' + self.channelId + '/metrics', undefined, callback);
