@@ -273,11 +273,17 @@ Numerous.prototype.getChannelMetricsPaged = function(_cb) {
 			if(err) {
 				callback(err, res);
 			} else {
-				metrics = res.metrics;
-				metrics.forEach(function(item) {
-					allMetrics.push(item);	
-				});
-				channelMetricURL = res.nextURL;
+				if(res.hasOwnProperty('metrics')) {
+					metrics = res.metrics;
+					metrics.forEach(function(item) {
+						allMetrics.push(item);	
+					});
+				} 
+				channelMetricURL = false;
+				if(res.hasOwnProperty('nextURL')) {
+					channelMetricURL = res.nextURL;
+				}
+				
 				callback();
 			}	
 		});
