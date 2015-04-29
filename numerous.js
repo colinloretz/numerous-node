@@ -235,13 +235,17 @@ Numerous.prototype.getChannelMetricsWithSourceClassV2Paged = function(sourceClas
 			if(err) {
 				callback(err, res);
 			} else {
-				metrics = res.metrics;
-				if(metrics.length > 0) {
+				if(res.hasOwnProperty('metrics')) {
+					metrics = res.metrics;
 					metrics.forEach(function(item) {
 						allMetrics.push(item);	
 					});
+				} 
+				sourceClassMetricURL = false;
+				if(res.hasOwnProperty('nextURL')) {
+					sourceClassMetricURL = res.nextURL;
 				}
-				sourceClassMetricURL = res.nextURL;
+				
 				callback();
 			}	
 		});
