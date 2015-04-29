@@ -236,9 +236,11 @@ Numerous.prototype.getChannelMetricsWithSourceClassV2Paged = function(sourceClas
 				callback(err, res);
 			} else {
 				metrics = res.metrics;
-				metrics.forEach(function(item) {
-					allMetrics.push(item);	
-				});
+				if(metrics.length > 0) {
+					metrics.forEach(function(item) {
+						allMetrics.push(item);	
+					});
+				}
 				sourceClassMetricURL = res.nextURL;
 				callback();
 			}	
