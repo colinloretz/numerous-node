@@ -32,7 +32,7 @@ Numerous.prototype.makeRequest = function(verb, url, body, callback) {
    request(options, function(err, res, body) {
         if (err) {
             return callback(err);
-        } else if (res.statusCode !== 200 && res.statusCode !== 201) {
+        } else if (res.statusCode !== 200 && res.statusCode !== 201 && res.statusCode != 409) {
             return callback(new Error(res.statusCode));
         } else {
             if (body) {
