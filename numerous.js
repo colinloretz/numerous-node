@@ -113,6 +113,11 @@ Numerous.prototype.getMyMetrics = function(callback) {
 	self.makeRequest("GET", self.url + '/users/me/metrics', undefined, callback);
 }
 
+Numerous.prototype.getMySubscriptions = function(callback) {
+    var self = this;
+	self.makeRequest("GET", self.url + '/users/me/subscriptions?expand=metric', undefined, callback);
+}
+
 Numerous.prototype.createMetric = function(metric, callback) {
 	var self = this;
 	self.makeRequest("POST", self.url + '/metrics', metric, callback);
