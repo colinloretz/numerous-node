@@ -32,7 +32,7 @@ Numerous.prototype.makeRequest = function(verb, url, body, callback) {
    request(options, function(err, res, body) {
         if (err) {
             return callback(err);
-        } else if (res.statusCode !== 200 && res.statusCode !== 201 && res.statusCode != 409) {
+        } else if (res.statusCode !== 200 && res.statusCode !== 201) {
             return callback(new Error(res.statusCode));
         } else {
             if (body) {
@@ -111,11 +111,6 @@ Numerous.prototype.makeFormRequest = function(verb, url, formData, callback) {
 Numerous.prototype.getMyMetrics = function(callback) {
     var self = this;
 	self.makeRequest("GET", self.url + '/users/me/metrics', undefined, callback);
-}
-
-Numerous.prototype.getMySubscriptions = function(callback) {
-    var self = this;
-	self.makeRequest("GET", self.url + '/users/me/subscriptions?expand=metric', undefined, callback);
 }
 
 Numerous.prototype.createMetric = function(metric, callback) {
@@ -229,39 +224,6 @@ Numerous.prototype.getChannelMetricsWithSourceClassV2 = function(sourceClass, ca
 	self.makeRequest("GET", 'https://api.numerousapp.com/v2/channels/' + self.channelId + '/metrics/' + sourceClass, undefined, callback);
 }
 
-Numerous.prototype.getChannelMetricsWithSourceClassV2Paged = function(sourceClass, _cb) {
-	var self = this;
-	var metrics = [];
-	var allMetrics = [];
-	var sourceClassMetricURL = 'https://api.numerousapp.com/v2/channels/' + self.channelId + '/metrics/' + sourceClass;
-	
-    async.doWhilst(function(callback) {
-		self.makeRequest("GET", sourceClassMetricURL, undefined, function(err, res) {
-			if(err) {
-				callback(err, res);
-			} else {
-				if(res.hasOwnProperty('metrics')) {
-					metrics = res.metrics;
-					metrics.forEach(function(item) {
-						allMetrics.push(item);	
-					});
-				} 
-				sourceClassMetricURL = false;
-				if(res.hasOwnProperty('nextURL')) {
-					sourceClassMetricURL = res.nextURL;
-				}
-				
-				callback();
-			}	
-		});
-    }, function() {
-		return sourceClassMetricURL;
-    }, function(err) {
-		_cb(err, allMetrics);
-    });
-}
-
-
 Numerous.prototype.getChannelMetrics = function(callback) {
 	var self = this;
 	self.makeRequest("GET", self.url + '/channels/' + self.channelId + '/metrics', undefined, callback);
@@ -278,17 +240,13 @@ Numerous.prototype.getChannelMetricsPaged = function(_cb) {
 			if(err) {
 				callback(err, res);
 			} else {
-				if(res.hasOwnProperty('metrics')) {
-					metrics = res.metrics;
+				metrics = res.metrics;
+				if(metrics) {
 					metrics.forEach(function(item) {
 						allMetrics.push(item);	
 					});
-				} 
-				channelMetricURL = false;
-				if(res.hasOwnProperty('nextURL')) {
-					channelMetricURL = res.nextURL;
 				}
-				
+				channelMetricURL = res.nextURL;
 				callback();
 			}	
 		});
@@ -297,6 +255,7 @@ Numerous.prototype.getChannelMetricsPaged = function(_cb) {
     }, function(err) {
 		_cb(err, allMetrics);
     });
+	
 }
 
 Numerous.prototype.createChannelMetric = function(metric, token, callback) {
