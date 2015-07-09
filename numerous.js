@@ -158,6 +158,11 @@ Numerous.prototype.getEventsForMetric = function(metricId, callback) {
 	self.makeRequest("GET", self.url + '/metrics/' + metricId + '/events', '', callback);
 }
 
+Numerous.prototype.getValueAt = function(metricId, timestamp, callback) {
+	var self = this;
+	self.makeRequest("GET", self.url + '/metrics/' + metricId + '/events/at?t=' + timestamp, '', callback);
+}
+
 Numerous.prototype.createEvent = function(metricId, valueJSON, callback) {
 	var self = this;
 	self.makeRequest("POST", self.url + '/metrics/' + metricId + '/events', valueJSON, callback)
