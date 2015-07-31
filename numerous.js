@@ -229,6 +229,34 @@ Numerous.prototype.getChannelMetricsWithSourceClassV2 = function(sourceClass, ca
 	self.makeRequest("GET", 'https://api.numerousapp.com/v2/channels/' + self.channelId + '/metrics/' + sourceClass, undefined, callback);
 }
 
+Numerous.prototype.getChannelMetricsWithSourceClassV2Paged = function(sourceClass, _cb) {
+	var self = this;
+	var metrics = [];
+	var allMetrics = [];
+	var sourceClassMetricURL = 'https://api.numerousapp.com/v2/channels/' + self.channelId + '/metrics/' + sourceClass;
+	
+    async.doWhilst(function(callback) {
+		self.makeRequest("GET", sourceClassMetricURL, undefined, function(err, res) {
+			if(err) {
+				callback(err, res);
+			} else {
+				metrics = res.metrics;
+				if(metrics.length > 0) {
+					metrics.forEach(function(item) {
+						allMetrics.push(item);	
+					});
+				}
+				sourceClassMetricURL = res.nextURL;
+				callback();
+			}	
+		});
+    }, function() {
+		return sourceClassMetricURL;
+    }, function(err) {
+		_cb(err, allMetrics);
+    });
+}
+
 Numerous.prototype.getChannelMetrics = function(callback) {
 	var self = this;
 	self.makeRequest("GET", self.url + '/channels/' + self.channelId + '/metrics', undefined, callback);
