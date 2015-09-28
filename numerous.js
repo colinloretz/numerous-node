@@ -180,6 +180,13 @@ Numerous.prototype.createComment = function(metricId, commentBody, callback) {
 	self.makeRequest("POST", self.url + '/metrics/' + metricId + '/interactions', jsonBody, callback)
 }
 
+Numerous.prototype.createCommentWithDate = function(metricId, commentBody, commentDate, callback) {
+	var self = this;
+	var event = { kind: "comment", commentBody: commentBody, updated: commentDate };
+	var jsonBody = JSON.stringify(event);
+	self.makeRequest("POST", self.url + '/metrics/' + metricId + '/interactions', jsonBody, callback)
+}
+
 Numerous.prototype.createError = function(metricId, commentBody, callback) {
 	var self = this;
 	var event = { kind: "error", commentBody: commentBody };
