@@ -228,7 +228,7 @@ Numerous.prototype.updateChannel = function(channel, callback) {
 
 Numerous.prototype.getChannelMetricsForUser = function(userId, token, callback) {
 	var self = this;
-	self.makeChannelRequest("GET", self.url + '/users/' + userId + '/channels/' + self.channelId + '/metrics', token, callback);
+	self.makeChannelRequest("GET", self.url + '/channels/' + self.channelId + '/users/' + userId + '/metrics', token, callback);
 }
 
 Numerous.prototype.getChannelMetricsWithSourceClass = function(sourceClass, callback) {
